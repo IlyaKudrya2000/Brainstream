@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5.0f;
 
     private CharacterController controller;
+    private float moveSpeedY = 0;
 
     private void Start()
     {
@@ -22,7 +23,16 @@ public class PlayerController : MonoBehaviour
 
         Vector3 moveDirection = transform.forward * verticalInput + transform.right * horizontalInput;
 
-        // √–¿¬»“¿÷»ﬂ?
+        if (Input.GetKey(KeyCode.Space))
+        {
+            
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            moveDirection *= 3; // ¡Â„
+        }
+       // √–¿¬»“¿÷»ﬂ?
 
         controller.Move(moveDirection * moveSpeed * Time.deltaTime);
     }
