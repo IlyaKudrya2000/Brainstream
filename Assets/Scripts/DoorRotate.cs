@@ -20,8 +20,8 @@ public class Door : MonoBehaviour
             Quaternion.Euler(0, end, 0),
             _animationCurve.Evaluate(i));
 
-        yield return null;
-    }
+            yield return null;
+        }
 
         _rotatingLeaf.transform.rotation = Quaternion.Euler(0, end, 0);
         _rotateCoroutine = null;
@@ -58,6 +58,8 @@ public class Door : MonoBehaviour
         else if (GetDoorState(currentAngle) == DoorState.Open)
             Close();
     }
+
+    //public void RotateToAngle(float angle)
 
     public void Open()
     {
