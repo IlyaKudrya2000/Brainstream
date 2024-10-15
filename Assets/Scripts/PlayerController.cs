@@ -4,10 +4,23 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5.0f;
-
     private CharacterController controller;
-    private float moveSpeedY = 0;
+    [Header("Movement")]
+    public float moveSpeed = 2f;
+    public float gravity = -9.81f;
+    float horizontalInput;
+    float verticalInput;
+    Vector3 moveDirection;
+    Vector3 velocity;
+
+    [Header("Ground Check")]
+    public Transform groundCheck;
+    public float groundDistance = 0.4f;
+    public LayerMask groundMask;
+    bool isGrounded;
+
+    [Header("Jump")]
+    public float jumpHeight = 3f;
 
     private void Start()
     {
@@ -18,22 +31,41 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        IsGrounded();
+        MyInput();
+        MovePlayer();
+        Gravity();
+        Jump();
+    }
 
-        Vector3 moveDirection = transform.forward * verticalInput + transform.right * horizontalInput;
+    private void MyInput()
+    {
+        horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
+    }
 
-        if (Input.GetKey(KeyCode.Space))
-        {
-            
-        }
-
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            moveDirection *= 3; // ¡Â„
-        }
-       // √–¿¬»“¿÷»ﬂ?
-
+    private void MovePlayer()
+    {
+        moveDirection = transform.forward * verticalInput + transform.right * horizontalInput;
         controller.Move(moveDirection * moveSpeed * Time.deltaTime);
+    }
+
+    private void Gravity()
+    {
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
+    }
+
+    private void IsGrounded()
+    {
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+    }
+
+    private void Jump()
+    {
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
     }
 }

@@ -1,29 +1,24 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts
+public class MouseLook : MonoBehaviour
 {
-    public class CameraController : MonoBehaviour
-    {
-
-        public float sensitivity = 2.0f;
-        public float maxYAngle = 80.0f;
-
-        private float rotationX = 0.0f;
-
-        // Update is called once per frame
-        void Update()
-        {
-            float mouseX = Input.GetAxis("Mouse X");
-            float mouseY = Input.GetAxis("Mouse Y");
-
-            transform.parent.Rotate(Vector3.up * mouseX * sensitivity);
-
-            rotationX -= mouseY * sensitivity;
-            rotationX = Mathf.Clamp(rotationX, -maxYAngle, maxYAngle);
-            transform.localRotation = Quaternion.Euler(rotationX, 0.0f, 0.0f);
-
-        }
-    }
+   public float sensitivity = 100.0f;
+   public Transform playerBody;
+   private float rotationX = 0.0f;
+   void Start()
+   {
+        Cursor.lockState = CursorLockMode.Locked;
+   }
+   void Update()
+   {
+       float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
+       float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+       
+       rotationX -= mouseY;
+       rotationX = Mathf.Clamp(rotationX, -90f, 90f);
+       transform.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
+       playerBody.Rotate(Vector3.up * mouseX);
+   }
 }
