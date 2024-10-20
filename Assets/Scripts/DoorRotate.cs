@@ -59,7 +59,14 @@ public class Door : MonoBehaviour
             Close();
     }
 
-    //public void RotateToAngle(float angle)
+    public void ToggleToAngle(float angle)
+    {
+        var currentAngle = GetCurrentAngle();
+        if (GetDoorState(currentAngle) != DoorState.Close)
+            Close();
+        else
+            _rotateCoroutine = StartCoroutine(Rotate(currentAngle, angle));
+    }
 
     public void Open()
     {
