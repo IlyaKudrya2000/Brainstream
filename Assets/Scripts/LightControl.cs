@@ -21,6 +21,14 @@ public class LightControl : MonoBehaviour
 
     void Update()
     {
-        lt.range = lt.range * (float)0.99999;
+        // lt.range = lt.range * (float)0.99999;
+        if(Input.GetKey(KeyCode.M))
+        {
+            lt.range -= 1;
+        }
+        else if(Input.GetKey(KeyCode.B))
+        {
+            lt.range += 1;
+        }
     }
 }
