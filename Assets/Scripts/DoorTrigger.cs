@@ -6,27 +6,30 @@ using UnityEngine.ProBuilder.Shapes;
 public class DoorTrigger : MonoBehaviour
 {
     [SerializeField] private Door _door;
-    public enum openType
+    //public enum openType
+    //{
+    //    full90degrees,
+    //    partiallyToAngle
+    //}
+    //public openType openTypeState;
+    //
+    //public float openAngle = 45;
+    private bool _isEnter;
+
+    private void OnTriggerEnter(Collider other)
     {
-        full90degrees,
-        partiallyToAngle
+        _isEnter = true;
     }
-    public openType openTypeState;
-
-    public float openAngle = 45;
-
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player")
+        if (Input.GetKey(KeyCode.E) && _isEnter)
         {
-            if (Input.GetKey(KeyCode.E))
-            {
-                if (openTypeState == openType.full90degrees)
-                    _door.Toggle();
-                else
-                    _door.ToggleToAngle(openAngle);
-            }
+            _door.Toggle();
         }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        _isEnter = false;
     }
 
 }
