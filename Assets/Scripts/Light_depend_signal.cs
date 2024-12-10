@@ -36,7 +36,7 @@ public class LightController : MonoBehaviour
 
         if (!isFlickering)
         {
-            lightSource.intensity = Mathf.SmoothDamp(lightSource.intensity, inputSignal <= 0.2f ? 0.2f : inputSignal, ref currentVelocity, smoothTime);
+            lightSource.intensity = Mathf.SmoothDamp(lightSource.intensity, inputSignal <= 0.4f ? 0.4f : inputSignal, ref currentVelocity, smoothTime);
             lightSource.spotAngle = Mathf.SmoothDamp(lightSource.spotAngle, (inputSignal * 60 + 30), ref currentVelocityAngle, smoothTime);
         }
     }

@@ -46,13 +46,21 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayer()
     {
+        float currentSpeed = moveSpeed;
+
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        {
+            currentSpeed *= 1.5f;
+        }
+
         moveDirection = transform.forward * verticalInput + transform.right * horizontalInput;
-        controller.Move(moveDirection * moveSpeed * Time.deltaTime);
+        controller.Move(moveDirection * currentSpeed * Time.deltaTime);
     }
+
 
     private void Gravity()
     {
-        velocity.y += gravity * Time.deltaTime;
+        velocity.y += 3 * gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
 
